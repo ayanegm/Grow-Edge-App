@@ -36,6 +36,15 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^8.1.0
   flutter_native_splash: ^2.4.7
+  http: ^1.6.0
+  bloc: ^9.2.1
+  flutter_bloc: ^9.1.1
+  dio: ^5.11.0
+  flutter_intl_phone_field: ^0.0.7
+  csc_picker: ^0.2.7
+  image_picker: ^1.2.2
+  path: ^1.9.1
+  drop_down_list: ^2.1.0
 
 dev_dependencies:
   flutter_test:

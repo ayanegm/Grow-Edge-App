@@ -1,0 +1,213 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grow_edge_app/auth_cubit/auth_cubit.dart';
+import 'package:grow_edge_app/auth_cubit/auth_state.dart';
+import 'package:grow_edge_app/constants/app_colors.dart';
+import 'package:grow_edge_app/controllers.dart';
+import 'package:grow_edge_app/models/user_type_models/coach_model.dart';
+import 'package:grow_edge_app/models/user_type_models/startup_model.dart';
+import 'package:grow_edge_app/pages/signup_page/coach/coach_complete_first_signup_page.dart';
+import 'package:grow_edge_app/pages/signup_page/participant/complete_signup_participant_page.dart';
+import 'package:grow_edge_app/pages/signup_page/partner/partner_complete_first_signup_page.dart';
+import 'package:grow_edge_app/widgets/custom_button.dart';
+import 'package:grow_edge_app/widgets/form_container.dart';
+import 'package:grow_edge_app/widgets/logo_container.dart';
+import 'package:grow_edge_app/widgets/text_field_otp.dart';
+
+class OtpVerificationPage extends StatelessWidget {
+  final String email;
+  final String userType;
+  const OtpVerificationPage({
+    super.key,
+    required this.email,
+    required this.userType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String? otp;
+    return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        // Use Builder here to get a fresh context that is a child of the BlocProvider
+        body: Builder(
+          builder: (context) {
+            return BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is AuthSuccessState) {
+                  if (userType == 'Participant') {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return CompleteProfileParticpantPage(
+                            email: email,
+                            otp: otp!,
+                          );
+                        },
+                      ),
+                    );
+                  } else if (userType == 'Coach') {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return CoachCompleteFirstSignupPage(
+                            coachModel: CoachModel(email: email, otp: otp),
+                          );
+                        },
+                      ),
+                    );
+                  } else if (userType == 'startup') {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return PartnerCompleteFirstSignupPage(
+                            startupModel: StartupModel(email: email, otp: otp),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }
+              },
+              builder: (context, state) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LogoContainer(
+                      childWidget: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 56),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Image.asset(
+                              'assets/images/Container.png',
+                              width: 32,
+                              height: 32,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    SizedBox(
+                      height: 375,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FormContainer(
+                              title: 'Verify Your Email',
+                              subTitle:
+                                  'Enter the code sent to your email address.',
+                            ),
+                            SizedBox(height: 24),
+                            Row(
+                              children: [
+                                TextFieldOTP(
+                                  controller: c1,
+                                  first: true,
+                                  last: false,
+                                ),
+                                SizedBox(width: 8),
+                                TextFieldOTP(
+                                  controller: c2,
+                                  first: false,
+                                  last: false,
+                                ),
+                                SizedBox(width: 8),
+                                TextFieldOTP(
+                                  controller: c3,
+                                  first: false,
+                                  last: false,
+                                ),
+                                SizedBox(width: 8),
+                                TextFieldOTP(
+                                  controller: c4,
+                                  first: false,
+                                  last: false,
+                                ),
+                                SizedBox(width: 8),
+                                TextFieldOTP(
+                                  controller: c5,
+                                  first: false,
+                                  last: false,
+                                ),
+                                SizedBox(width: 8),
+                                TextFieldOTP(
+                                  controller: c6,
+                                  first: false,
+                                  last: true,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 36),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Didn\'t receive the code?',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                Text(
+                                  'Resend',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 121),
+                            state is AuthLoadingState
+                                ? Center(child: CircularProgressIndicator())
+                                : Container(
+                                    color: Colors.white,
+                                    height: 84,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 16,
+                                        bottom: 24,
+                                      ),
+                                      child: CustomButton(
+                                        text: 'Verify Email',
+                                        onTap: () {
+                                          otp =
+                                              c1.text +
+                                              c2.text +
+                                              c3.text +
+                                              c4.text +
+                                              c5.text +
+                                              c6.text;
+                                          print(otp);
+                                          BlocProvider.of<AuthCubit>(
+                                            context,
+                                          ).verify_otp(email: email, otp: otp!);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
