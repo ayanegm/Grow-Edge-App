@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grow_edge_app/widgets/custom_text_field.dart';
+import 'package:grow_edge_app/core/widgets/custom_text_field.dart';
 import 'package:grow_edge_app/widgets/text_field_title.dart';
 
 class LabeledTextField extends StatelessWidget {

@@ -5,9 +5,12 @@ class LogoContainer extends StatelessWidget {
   final Widget? childWidget;
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+
     return Container(
       width: double.infinity,
-      height: 100,
+      height: screenHeight * 0.122,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,

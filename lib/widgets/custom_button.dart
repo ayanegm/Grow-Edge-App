@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grow_edge_app/constants/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         color: buttonColor,
-        height: 44,
+        height: 44.sp,
         width: double.infinity,
         child: Center(
           child: Text(
@@ -25,7 +26,7 @@ class CustomButton extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,
-              fontSize: 13,
+              fontSize: 13.sp,
             ),
           ),
         ),
