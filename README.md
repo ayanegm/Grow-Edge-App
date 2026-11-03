@@ -1,4 +1,4 @@
-# Grow Edge Mobile App 
+# Grow Edge App 
 
 **Grow Edge** is a production-level mobile platform built with **Flutter** and **Dart** using **Clean Architecture** principles. Designed to bridge the gap between coaches and students, the app provides tailored role-based flows: **coaches** can upload, structure, and manage training packages and courses, while **students** can seamlessly browse, select, and book their desired programs.
 
@@ -30,7 +30,7 @@
 
 * **Third-Party Services:** Fawry Payment Gateway
 
-## 🏛️ Project Architecture
+## Project Architecture
 
 The application is structured into distinct layers following Clean Architecture principles:
 
@@ -75,6 +75,3 @@ lib/
    ```bash
    flutter run
    ```
-* **GitHub:** [@ayanegm](https://github.com/ayanegm)
-
-* **Email:** ayanegm016@gmail.com
